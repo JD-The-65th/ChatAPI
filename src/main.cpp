@@ -5,8 +5,15 @@
 #include "ModConfig.hpp"
 #include "config-utils/shared/config-utils.hpp"
 
+#include "UnityEngine/SceneManagement/Scene.hpp"
+#include "UnityEngine/SceneManagement/SceneManager.hpp"
+
+
 #include <thread>
 #include <map>
+
+#include "questui/shared/QuestUI.hpp"
+#include "questui/shared/CustomTypes/Components/MainThreadScheduler.hpp"
 
 #define JOIN_RETRY_DELAY 3000
 #define CONNECT_RETRY_DELAY 15000
@@ -61,7 +68,7 @@ void OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client) {
     }
     if (usersColorCache.find(username) == usersColorCache.end())
         usersColorCache.emplace(username, int_to_hex(rand() % 0x1000000, 6));
-        
+
     ChatAPI::Message messageObject;
     messageObject.userName = username;
     messageObject.message = message;
@@ -132,10 +139,28 @@ void TwitchIRCThread() {
     getLogger().info("Thread Stopped!");
 }
 
+
+MAKE_HOOK_MATCH(SceneManager_Internal_ActiveSceneChanged,
+                &UnityEngine::SceneManagement::SceneManager::Internal_ActiveSceneChanged,
+                void, UnityEngine::SceneManagement::Scene prevScene, UnityEngine::SceneManagement::Scene nextScene) {
+    SceneManager_Internal_ActiveSceneChanged(prevScene, nextScene);
+    if(nextScene.IsValid()) {
+        std::string sceneName = to_utf8(csstrtostr(nextScene.get_name()));
+        if(sceneName.find("Menu") != std::string::npos) {
+            QuestUI::MainThreadScheduler::Schedule(
+                [] {
+                    if (!threadRunning)
+                        std::thread (TwitchIRCThread).detach();
+                }
+            );
+        }
+    }
+}
+
 // Called at the early stages of game loading
 extern "C" void setup(ModInfo& info) {
-    info.id = MOD_ID;
-    info.version = VERSION;
+    modInfo.id = "ChatAPI";
+    modInfo.version = VERSION;
     modInfo = info;
     Blacklist.insert("dootybot");
     Blacklist.insert("nightbot");
@@ -149,6 +174,8 @@ extern "C" void load() {
     il2cpp_functions::Init();
 
     getLogger().info("Installing hooks...");
+
+    QuestUI::Init();
     // Install our hooks (none defined yet)
     getLogger().info("Installed all hooks!");
 }
