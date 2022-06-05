@@ -8,6 +8,8 @@
 #include "UnityEngine/SceneManagement/Scene.hpp"
 #include "UnityEngine/SceneManagement/SceneManager.hpp"
 
+#include "customlogger.hpp"
+
 
 #include <thread>
 #include <map>
