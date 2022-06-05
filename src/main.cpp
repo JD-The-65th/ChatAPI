@@ -11,6 +11,9 @@
 
 #include <thread>
 #include <map>
+#include <iomanip>
+#include <sstream>
+#include <chrono>
 
 #include "questui/shared/QuestUI.hpp"
 #include "questui/shared/CustomTypes/Components/MainThreadScheduler.hpp"
