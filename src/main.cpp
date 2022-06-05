@@ -1,5 +1,6 @@
 #include "main.hpp"
 #include "ChatAPI.hpp"
+
 #include "TwitchIRC/TwitchIRCClient.hpp"
 
 #include "ModConfig.hpp"
@@ -22,6 +23,10 @@
 
 #define JOIN_RETRY_DELAY 3000
 #define CONNECT_RETRY_DELAY 15000
+
+// Framework is done, but project WILL NOT BUILD.
+// More can be found at https://github.com/JD-The-65th/ChatAPI/runs/6745202756?check_suite_focus=true
+// Timer for hours wasted: 2.
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 

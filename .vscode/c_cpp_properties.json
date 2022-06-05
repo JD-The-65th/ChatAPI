@@ -14,7 +14,7 @@
                 "${workspaceFolder}/include",
                 "${workspaceFolder}/shared",
                 "${workspaceFolder}",
-                "/home/jd65/Documents/android-ndk-r24/**",
+                "/opt/android-ndk**",
                 "${default}"
             ],
             "name": "Quest",
