@@ -1,6 +1,6 @@
 # ChatAPI
 
-AN API for twitch chat
+An API for twitch chat
 
 ## Credits
 
