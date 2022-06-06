@@ -10,6 +10,7 @@ namespace ChatAPI {
             std::string userLevel;
             std::string userColor;
             std::string message;
+        
         static UnorderedEventCallback<Message, std::string_view, std::string const &> messageCallback;
 
         static void OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client);
@@ -25,8 +26,7 @@ namespace ChatAPI {
     // Returns the current message.
     static std::string currentUserMessage();
 
-
-
+    static bool sendMessage(std::string message);
     
 }
 

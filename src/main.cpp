@@ -54,14 +54,13 @@ Logger& getLogger() {
     return *logger;
 }
 
-// Depricated, but we'll keep you in for the time being.
+// Depricated, but we'll keep you in for compatability reasons.
 void AddChatObject(std::string text) {
     ChatAPI::Message messageObject;
     messageObject.message = text;
 }
 
-
-
+TwitchIRCClient client = TwitchIRCClient();
 
 
 void TwitchIRCThread() {
@@ -69,7 +68,6 @@ void TwitchIRCThread() {
         return;
     threadRunning = true;
     getLogger().info("Thread Started!");
-    TwitchIRCClient client = TwitchIRCClient();
     std::string currentChannel = "";
     using namespace std::chrono;
     milliseconds lastJoinTry = 0ms;
@@ -122,6 +120,20 @@ void TwitchIRCThread() {
     threadRunning = false;
     client.Disconnect();
     getLogger().info("Thread Stopped!");
+}
+bool ChatAPI::sendMessage(std::string message) {
+    if (threadRunning) {
+        getLogger().info("Twitch Chat: Message not sent, chat thread is already running.");
+        return false;
+    }
+    else if (message.length() > 500) {
+        getLogger().info("Twitch Chat: Message not sent, message is too long.");
+        return false;
+    }
+    else {
+        client.SendChatMessage(message);
+        return true;
+    }
 }
 
 

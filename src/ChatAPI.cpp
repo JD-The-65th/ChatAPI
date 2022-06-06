@@ -38,8 +38,6 @@ std::string ChatAPI::currentUserLevel() {
 std::string ChatAPI::currentUserMessage() {
     return ChatMessage.message;
 };
-
-
 void ChatAPI::Message::OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client) {
     std::string username = ircMessage.prefix.nick;
     std::string message = ircMessage.parameters.at(ircMessage.parameters.size() - 1);
@@ -65,8 +63,6 @@ void ChatAPI::Message::OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* cli
     ChatMessage.userLevel = level;
 
     ChatAPI::Message::messageCallback.invoke(ChatMessage, message, username);
-
-
 
 }
 
