@@ -42,6 +42,8 @@ add_library(
         SHARED
         ${cpp_file_list}
         ${c_file_list}
+        ${twitchirc_cpp_file_list}
+        ${twitchirc_c_file_list}
 )
 
 target_include_directories(${COMPILE_ID} PRIVATE .)
