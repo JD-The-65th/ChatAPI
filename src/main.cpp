@@ -11,7 +11,6 @@
 
 #include "customlogger.hpp"
 
-
 #include <thread>
 #include <map>
 #include <iomanip>
@@ -32,14 +31,7 @@ static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to 
 
 bool threadRunning = false;
 
-
-
 DEFINE_CONFIG(ModConfig);
-
-
-
-
-
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
@@ -137,7 +129,6 @@ bool ChatAPI::sendMessage(std::string message) {
         return true;
     }
 }
-
 
 MAKE_HOOK_MATCH(SceneManager_Internal_ActiveSceneChanged,
                 &UnityEngine::SceneManagement::SceneManager::Internal_ActiveSceneChanged,

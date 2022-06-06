@@ -1,6 +1,8 @@
-#include <string>
 #include "beatsaber-hook/shared/utils/typedefs-wrappers.hpp"
+
 #include "TwitchIRC/TwitchIRCClient.hpp"
+
+#include <string>
 
 namespace ChatAPI {
 

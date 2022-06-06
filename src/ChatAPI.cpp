@@ -1,13 +1,16 @@
+#include "main.hpp"
+#include "customlogger.hpp"
 #include "ChatAPI.hpp"
-#include <string>
-#include "beatsaber-hook/shared/utils/typedefs-wrappers.hpp"
+
 #include "TwitchIRC/TwitchIRCClient.hpp"
+
+#include "beatsaber-hook/shared/utils/typedefs-wrappers.hpp"
+
+#include <string>
 #include <map>
 #include <iomanip>
 #include <sstream>
 #include <chrono>
-#include "main.hpp"
-#include "customlogger.hpp"
 
 UnorderedEventCallback<ChatAPI::Message, std::string_view, std::string const &> ChatAPI::Message::messageCallback;
 
@@ -22,7 +25,6 @@ inline std::string int_to_hex(T val, size_t width=sizeof(T)*2) {
 }
 
 bool blackListConfigured;
-
 
 ChatAPI::Message ChatMessage;
 
