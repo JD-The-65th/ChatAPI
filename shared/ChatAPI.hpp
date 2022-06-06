@@ -15,10 +15,14 @@ namespace ChatAPI {
         static void OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client);
     };
 
-
+    // Returns the current UserName associated with the message
     static std::string currentUserName();
+    // Returns the current level (Viewer, Sub, VIP, Mod, Streamer) associated with the message
+    // This function is a stub still being worked on.
     static std::string currentUserLevel();
+    // Returns the color of the user associated with the message.
     static std::string currentUserColor();
+    // Returns the current message.
     static std::string currentUserMessage();
 
 

@@ -1,0 +1,15 @@
+{
+  "_QPVersion": "0.1.1",
+  "name": "${mod_name}",
+  "id": "${mod_id}",
+  "author": "JD The 65th",
+  "version": "${version}",
+  "packageId": "com.beatgames.beatsaber",
+  "packageVersion": "1.22.0",
+  "description": "${mod_id}, version ${version}! This is a dependency for mods that use twitch chat. DO NOT UNINSTALL.",
+  "dependencies": [],
+  "modFiles": [],
+  "libraryFiles": [],
+  "fileCopies": [],
+  "copyExtensions": []
+}

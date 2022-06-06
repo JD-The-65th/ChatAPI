@@ -34,6 +34,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 echo "Creating qmod from mod.json"
+qpm-rust qmod build
 
 $schemaUrl = "https://raw.githubusercontent.com/Lauriethefish/QuestPatcher.QMod/main/QuestPatcher.QMod/Resources/qmod.schema.json"
 Invoke-WebRequest $schemaUrl -OutFile ./mod.schema.json
