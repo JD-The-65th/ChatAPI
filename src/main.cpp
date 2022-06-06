@@ -98,8 +98,10 @@ void TwitchIRCThread() {
                 getLogger().info("Twitch Chat: Connecting...");
                 lastConnectTry = currentTime;
                 if (client.InitSocket()) {
+                    std::string targetChannel = getModConfig().Channel.GetValue();
+                    std::string targetOAuthToken = getModConfig().OAuth.GetValue();
                     if (client.Connect()) {
-                        if (client.Login("justinfan" + std::to_string(1030307 + rand() % 1030307), "xxx")) {
+                        if (client.Login(targetChannel + targetOAuthToken)) {
                             wasConnected = true;
                             AddChatObject("<color=#FFFFFFFF>Logged In!</color>");
                             getLogger().info("Twitch Chat: Logged In!");
