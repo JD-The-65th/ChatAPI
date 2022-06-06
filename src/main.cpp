@@ -32,17 +32,11 @@ static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to 
 
 bool threadRunning = false;
 
-std::unordered_set<std::string> Blacklist;
-std::map<std::string, std::string> usersColorCache;
+
 
 DEFINE_CONFIG(ModConfig);
 
-template <typename T>
-inline std::string int_to_hex(T val, size_t width=sizeof(T)*2) {
-    std::stringstream ss;
-    ss << "#" << std::setfill('0') << std::setw(width) << std::hex << (val|0) << "ff";
-    return ss.str();
-}
+
 
 
 
@@ -66,25 +60,6 @@ void AddChatObject(std::string text) {
     messageObject.message = text;
 }
 
-void OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client) {
-    std::string username = ircMessage.prefix.nick;
-    std::string message = ircMessage.parameters.at(ircMessage.parameters.size() - 1);
-    std::string level = ircMessage.prefix.user; // Not so sure of this value.
-    if (Blacklist.count(username)) {
-        getLogger().info("Twitch Chat: Blacklisted user %s sent the message: %s", username.c_str(), message.c_str());
-        return;
-    } else {
-        getLogger().info("Twitch Chat: User %s sent the message: %s", username.c_str(), message.c_str());
-    }
-    if (usersColorCache.find(username) == usersColorCache.end())
-        usersColorCache.emplace(username, int_to_hex(rand() % 0x1000000, 6));
-
-    ChatAPI::Message messageObject;
-    messageObject.userName = username;
-    messageObject.message = message;
-    messageObject.userColor = usersColorCache[username];
-    messageObject.userLevel = level;
-}
 
 
 
@@ -130,7 +105,7 @@ void TwitchIRCThread() {
                             wasConnected = true;
                             AddChatObject("<color=#FFFFFFFF>Logged In!</color>");
                             getLogger().info("Twitch Chat: Logged In!");
-                            client.HookIRCCommand("PRIVMSG", OnChatMessage);
+                            client.HookIRCCommand("PRIVMSG", ChatAPI::Message::OnChatMessage);
                             currentChannel = "";
                         }
                     }
@@ -172,8 +147,6 @@ extern "C" void setup(ModInfo& info) {
     modInfo.id = "ChatAPI";
     modInfo.version = VERSION;
     modInfo = info;
-    Blacklist.insert("dootybot");
-    Blacklist.insert("nightbot");
 	
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
