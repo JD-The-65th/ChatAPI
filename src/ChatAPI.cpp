@@ -9,7 +9,7 @@
 #include "main.hpp"
 #include "customlogger.hpp"
 
-static UnorderedEventCallback<ChatAPI::Message, std::string_view, std::string const &> messageCallback;
+UnorderedEventCallback<ChatAPI::Message, std::string_view, std::string const &> ChatAPI::Message::messageCallback;
 
 std::unordered_set<std::string> Blacklist;
 std::map<std::string, std::string> usersColorCache;
