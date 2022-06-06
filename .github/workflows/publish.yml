@@ -85,6 +85,11 @@ jobs:
           cd ${GITHUB_WORKSPACE}
           pwsh -Command ./build.ps1
 
+      - name: Generate Mod.json
+        run: |
+          chmod +x ./QPM/qpm-rust
+          ./QPM/qpm-rust qmod build
+
       
       - name: Create Qmod
         run: |

@@ -84,6 +84,12 @@ jobs:
         pattern="lib${module_id}*.so"
         files=( $pattern )
         echo ::set-output name=NAME::"${files[0]}"
+        
+    - name: Generate Mod.json
+      run: |
+        chmod +x ./QPM/qpm-rust
+        ./QPM/qpm-rust qmod build
+
 
     - name: Create Qmod
       run: |
