@@ -15,6 +15,14 @@ namespace ChatAPI {
         static void OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client);
     };
 
+
+    static std::string currentUserName();
+    static std::string currentUserLevel();
+    static std::string currentUserColor();
+    static std::string currentUserMessage();
+
+
+
     
 }
 

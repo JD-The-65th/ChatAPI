@@ -24,6 +24,22 @@ inline std::string int_to_hex(T val, size_t width=sizeof(T)*2) {
 bool blackListConfigured;
 
 
+ChatAPI::Message ChatMessage;
+
+std::string ChatAPI::currentUserColor() {
+    return ChatMessage.userColor;
+};
+std::string ChatAPI::currentUserName() {
+    return ChatMessage.userName;
+};
+std::string ChatAPI::currentUserLevel() {
+    return ChatMessage.userLevel;
+};
+std::string ChatAPI::currentUserMessage() {
+    return ChatMessage.message;
+};
+
+
 void ChatAPI::Message::OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* client) {
     std::string username = ircMessage.prefix.nick;
     std::string message = ircMessage.parameters.at(ircMessage.parameters.size() - 1);
@@ -43,12 +59,15 @@ void ChatAPI::Message::OnChatMessage(IRCMessage ircMessage, TwitchIRCClient* cli
     if (usersColorCache.find(username) == usersColorCache.end())
         usersColorCache.emplace(username, int_to_hex(rand() % 0x1000000, 6));
 
-    ChatAPI::Message messageObject;
-    messageObject.userName = username;
-    messageObject.message = message;
-    messageObject.userColor = usersColorCache[username];
-    messageObject.userLevel = level;
-    ChatAPI::Message::messageCallback.invoke(messageObject, message, username);
+    ChatMessage.userName = username;
+    ChatMessage.message = message;
+    ChatMessage.userColor = usersColorCache[username];
+    ChatMessage.userLevel = level;
+
+    ChatAPI::Message::messageCallback.invoke(ChatMessage, message, username);
+
+
+
 }
 
 
